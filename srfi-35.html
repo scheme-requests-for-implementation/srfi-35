@@ -14,6 +14,26 @@ Conditions
 
 Richard Kelsey and Michael Sperber
 
+<H1>Status</H1>
+
+This SRFI is currently in ``draft'' status. To see an explanation of
+each status that a SRFI can hold, see <a
+href="http://srfi.schemers.org/srfi-process.html">here</a>.  It will
+remain in draft until 2002-10-20, or as amended.  to provide input on
+this SRFI, please mail to 
+<a href="mailto:srfi-35@srfi.schemers.org">
+<code>srfi-35@srfi.schemers.org</code></a>.
+See <a href="http://srfi.schemers.org/srfi-list-subscribe.html">
+instructions here</a> to subscribe to the list.  You can access
+the discussion via
+<a href="http://srfi.schemers.org/srfi-35/mail-archive/maillist.html">
+the archive of the mailing list</a>.
+
+<UL>
+      <LI>Draft: 2002/07/24-2002/10/20</LI>
+      <li>Revised: 2002/09/20</li>
+</UL>
+
 <h1>Abstract</h1>
 <p>The SRFI defines constructs for creating and inspecting <i>condition</i> types and values.  A condition value encapsulates information about an exceptional situation, or exception. This SRFI also defines a few basic condition types.</p>
 <h1>Rationale</h1>
@@ -32,8 +52,7 @@ Richard Kelsey and Michael Sperber
 <h2>Procedures</h2>
 <dl><dt><code>(make-condition-type </code><var>id</var>
  <var>parent</var>
- <var>field-names</var>
-<code>)</code></dt>
+ <var>field-names</var><code>)</code></dt>
 <dd><p><code>Make-condition-type</code>
  returns a new condition type. <var>Id</var>
  must be a symbol that serves as a symbolic name for the condition type.  <var>Parent</var>
@@ -43,8 +62,7 @@ Richard Kelsey and Michael Sperber
  must be disjoint from the field names of <var>parent</var>
  and its ancestors.</p>
 </dd>
-<dt><code>(condition-type? </code><var>thing</var>
-<code>)</code></dt>
+<dt><code>(condition-type? </code><var>thing</var><code>)</code></dt>
 <dd><p><code>Condition-type?</code>
  is a predicate for condition types: it returns <code>#t</code>
  if <var>thing</var>
@@ -56,13 +74,11 @@ Richard Kelsey and Michael Sperber
  <var>value</var>
  ...<code>)</code></dt>
 <dd><p><code>Make-condition</code>
- creates a condition value belonging condition type <var>type</var>
-.  The following arguments must be, in turn, a field name and an arbitrary value.  There must be such a pair for each field of <var>type</var>
+ creates a condition value belonging condition type <var>type</var>.  The following arguments must be, in turn, a field name and an arbitrary value.  There must be such a pair for each field of <var>type</var>
  and its direct and indirect supertypes.  <code>Make-condition</code>
  returns the condition value, with the argument values associated with their respective fields.</p>
 </dd>
-<dt><code>(condition? </code><var>thing</var>
-<code>)</code></dt>
+<dt><code>(condition? </code><var>thing</var><code>)</code></dt>
 <dd><p><code>Condition?</code>
  is a predicate for conditions: it returns <code>#t</code>
  if <var>thing</var>
@@ -70,12 +86,10 @@ Richard Kelsey and Michael Sperber
  otherwise</p>
 </dd>
 <dt><code>(condition-has-type? </code><var>condition</var>
- <var>condition-type</var>
-<code>)</code></dt>
+ <var>condition-type</var><code>)</code></dt>
 <dd><p><code>Condition-has-type?</code>
  tests if condition <var>condition</var>
- belongs to condition type <var>condition-type</var>
-.  It returns <code>#t</code>
+ belongs to condition type <var>condition-type</var>.  It returns <code>#t</code>
  if any of <var>condition</var>
 's types includes <var>condition-type</var>
 eitherdirectlyorasanancestorand
@@ -86,40 +100,32 @@ eitherdirectlyorasanancestorand
  is not a condition type.</p>
 </dd>
 <dt><code>(condition-ref </code><var>condition</var>
- <var>field-name</var>
-<code>)</code></dt>
+ <var>field-name</var><code>)</code></dt>
 <dd><p><var>Condition</var>
  must be a condition, and <var>field-name</var>
  a symbol.  Moreover, <var>condition</var>
- must belong to a condition type which has a field name called <var>field-name</var>
-, or one of its (direct or indirect) supertypes must have the field. <code>Condition-ref</code>
- returns the value associated with <var>field-name</var>
-.</p>
+ must belong to a condition type which has a field name called <var>field-name</var>, or one of its (direct or indirect) supertypes must have the field. <code>Condition-ref</code>
+ returns the value associated with <var>field-name</var>.</p>
 <p>It is an error to refer to a field the condition does not have.</p>
 </dd>
 <dt><code>(make-compound-condition </code><var>condition<sub>0</sub>
 </var>
  <var>condition<sub>1</sub>
-...</var>
-<code>)</code></dt>
+...</var><code>)</code></dt>
 <dd><p><code>Make-compound-condition</code>
  returns a compound condition  belonging to all condition types that the <var>condition<sub>i</sub>
 </var>
  belong to. </p>
-<p><code>Condition-ref</code>
-, when applied to a compound condition will return the value from the first of the <var>condition<sub>i</sub>
+<p><code>Condition-ref</code>, when applied to a compound condition will return the value from the first of the <var>condition<sub>i</sub>
 </var>
  that has such a field.</p>
 </dd>
 <dt><code>(extract-condition </code><var>condition</var>
- <var>condition-type</var>
-<code>)</code></dt>
+ <var>condition-type</var><code>)</code></dt>
 <dd><p><var>Condition</var>
- must be a condition belonging to <var>condition-type</var>
-.  <code>Extract-condition</code>
+ must be a condition belonging to <var>condition-type</var>.  <code>Extract-condition</code>
 returns a condition of condition type <var>condition-type</var>
- with the field values specified by <var>condition</var>
-.</p>
+ with the field values specified by <var>condition</var>.</p>
 <p>If <var>condition</var>
  is a compound condition, <code>extract-condition</code>
  extracts the field values from  the subcondition belonging to <var>condition-type</var>
