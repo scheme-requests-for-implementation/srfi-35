@@ -1,22 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN""http://www.w3.org/TR/REC-html40/loose.dtd">
-<html>
+<html lang="en">
 <head>
   <title>SRFI 35: Conditions</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="/srfi.css" type="text/css" />
+  <link rel="stylesheet" href="https://srfi.schemers.org/srfi.css" type="text/css" />
+  <link href="/favicon.png" rel="icon" sizes="192x192" type="image/png">
 </head>
 
 <body>
-<H1>Title</H1>
+<h1><a href="https://srfi.schemers.org/"><img class="srfi-logo" src="https://srfi.schemers.org/srfi-logo.svg" alt="SRFI surfboard logo" /></a>35: Conditions</h1>
 
-Conditions
+<p>by Richard Kelsey and Michael Sperber</p>
 
-<H1>Authors</H1>
-
-Richard Kelsey and Michael Sperber
-
-<H1>Status</H1>
+<h2>Status</h2>
 
 <p>This SRFI is currently in <em>final</em> status.  Here is <a href="https://srfi.schemers.org/srfi-process.html">an explanation</a> of each status that a SRFI can hold.  To provide input on this SRFI, please send email to <code><a href="mailto:srfi+minus+35+at+srfi+dotschemers+dot+org">srfi-35@<span class="antispam">nospam</span>srfi.schemers.org</a></code>.  To subscribe to the list, follow <a href="https://srfi.schemers.org/srfi-list-subscribe.html">these instructions</a>.  You can access previous messages via the mailing list <a href="https://srfi-email.schemers.org/srfi-35">archive</a>.</p>
 
@@ -26,9 +23,9 @@ Richard Kelsey and Michael Sperber
       <li>Final: 2002-12-01</li>
 </UL>
 
-<h1>Abstract</h1>
+<h2>Abstract</h2>
 <p>The SRFI defines constructs for creating and inspecting <i>condition</i> types and values.  A condition value encapsulates information about an exceptional situation, or exception. This SRFI also defines a few basic condition types.</p>
-<h1>Rationale</h1>
+<h2>Rationale</h2>
 <p>Conditions are values that communicate information about exceptional situations between parts of a program. Code that detects an exception may be in a different part of the program than the code that handles it. In fact, the former may have been written independently from the latter.  Consequently, to facilitate effective handling of exceptions, conditions must communicate as much information as possible as accurately as possible, and still allow effective handling by code that did not precisely anticipate the nature of the exception that occurred.</p>
 <p>This  SRFI provides two mechanisms to enable this kind of communication<ul><li>subtyping among condition types allows handling code to determine the <em>general</em>
  nature of an exception even though it does not anticipate its <em>exact</em>
@@ -36,12 +33,12 @@ Richard Kelsey and Michael Sperber
 <li>compound conditions allow an exceptional situation to be described in multiple ways.</li>
 </ul>
 </p>
-<h1>Specification</h1>
+<h2>Specification</h2>
 <p>Conditions are records with named fields. Each condition belongs to one or more <i>condition types</i>. Each condition type specifies a set of field names. A condition belonging to a condition type includes a value for each of the type's field names. These values can be extracted from the condition by using the appropriate field name.</p>
 <p>There is a tree of condition types with the distinguished <code>&amp;condition</code>
  as its root. All other condition types have a parent condition type.</p>
 <p>A condition belonging to several condition types with a common supertype may have distinct values for the supertype's fields for each type. The type used to access a field determines which of the values is returned. The program can extract each of these field values separately.</p>
-<h2>Procedures</h2>
+<h3>Procedures</h3>
 <dl><dt><code>(make-condition-type </code><var>id</var>
  <var>parent</var>
  <var>field-names</var><code>)</code></dt>
@@ -129,7 +126,7 @@ returns a condition of condition type <var>condition-type</var>
 </pre>to return false.</p>
 </dd>
 </dl>
-<h2>Macros</h2>
+<h3>Macros</h3>
 <dl><dt><code>(define-condition-type </code>&lt;condition-type&gt; &lt;supertype&gt; &lt;predicate&gt; &lt;field-spec&gt; ...<code>)</code></dt>
 <dd><p>This defines a new condition type. &lt;Condition-type&gt;, &lt;supertypes&gt;, and &lt;predicate&gt; must all be identifiers. <code>Define-condition-type</code>
  defines an identifier &lt;condition-type&gt; to some value describing the condition type. &lt;supertype&gt; must be the name of a previously defined condition type. </p>
@@ -159,7 +156,7 @@ form. The field names and values are duplicated as necessary as described below.
  form.</p>
 </dd>
 </dl>
-<h2>Standard Conditions</h2>
+<h3>Standard Conditions</h3>
 <dl><dt><code>&amp;condition</code>
 </dt>
 <dd><p>This is the root of the entire condition type hierarchy. It has a no fields.</p>
@@ -187,7 +184,7 @@ form. The field names and values are duplicated as necessary as described below.
 </dd>
 </dd>
 </dl>
-<h1>Examples</h1>
+<h2>Examples</h2>
 <pre>(define-condition-type &amp;c &amp;condition
   c?
   (x c-x))
@@ -247,7 +244,7 @@ form. The field names and values are duplicated as necessary as described below.
 (c-x v5)       =&gt; &quot;V2&quot;
 (c1-a v5)      =&gt; &quot;a3&quot;
 (c2-b v5)      =&gt; &quot;b2&quot;
-</pre><h1>Reference Implementation</h1>
+</pre><h2>Reference Implementation</h2>
 <p>The reference implementation makes use of <a href="https://srfi.schemers.org/srfi-1/">SRFI 1</a>
  (&quot;List Library&quot;), <a href="https://srfi.schemers.org/srfi-9/">SRFI 9</a>
  (&quot;Defining Record Types&quot;), and <a href="https://srfi.schemers.org/srfi-23/">SRFI 23</a>
@@ -426,7 +423,7 @@ form. The field names and values are duplicated as necessary as described below.
 
 (define-condition-type &amp;error &amp;serious
   error?)
-</pre><h1>References</h1>
+</pre><h2>References</h2>
 <ul><li><a href="https://srfi.schemers.org/srfi-12/">SRFI 12: Exception Handling</a>
 by William Clinger, R. Kent Dybvig, Matthew Flatt, and Marc Feeley</li>
 <li><a href="http://www.swiss.ai.mit.edu/ftpdir/scheme-mail/HTML/rrrs-1996/msg00022.html">Richard Kelsey's 1996 proposal</a>
@@ -444,7 +441,7 @@ by William Clinger, R. Kent Dybvig, Matthew Flatt, and Marc Feeley</li>
 </li>
 </ul>
 
-<H1>Copyright</H1>
+<h2>Copyright</h2>
 
 <p>Copyright (C) Richard Kelsey, Michael Sperber (2002). All Rights
 Reserved.</p>
